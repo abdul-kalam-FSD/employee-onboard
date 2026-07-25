@@ -43,6 +43,7 @@ const registerEmployeeController = asyncHandler(async (req, res) => {
 
   return sendSuccess(res, 201, "Employee Registered Successfully", {
     employeeId,
+    createdDate,
   });
 });
 
