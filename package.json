@@ -1,0 +1,13 @@
+{
+  "name": "employee-onboard-root",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "both": "concurrently \"npm:dev-backend\" \"npm:dev-frontend\"",
+    "dev-backend": "cd backEnd && npm run dev",
+    "dev-frontend": "cd frontEnd && npm run dev"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.3"
+  }
+}
