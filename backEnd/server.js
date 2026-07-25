@@ -22,8 +22,11 @@ app.use(express.json());
 // Only allow the React (Vite) dev server to call this API
 app.use(
   cors({
-    origin: process.env.CLIENT_ORIGIN || "http://localhost:5173",
-  })
+    origin: [
+      "http://localhost:5173",
+      "https://employee-onboardingsystem.netlify.app",
+    ],
+  }),
 );
 
 // Health check
