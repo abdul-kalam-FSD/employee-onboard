@@ -19,8 +19,10 @@ const registerEmployeeController = asyncHandler(async (req, res) => {
     joiningDate,
     workMode,
   } = req.body;
+
   // Backend owns these two values - never trust them from the frontend.
-  const employeeId = generateEmployeeId();
+  // generateEmployeeId looks up the last id in the Sheet, so it's async.
+  const employeeId = await generateEmployeeId();
   const createdDate = generateCreatedDate();
 
   const payload = {
@@ -39,11 +41,8 @@ const registerEmployeeController = asyncHandler(async (req, res) => {
   // and is caught by asyncHandler, which forwards to errorHandler.js.
   await registerEmployee(payload);
 
-  // Return both the generated employeeId and createdDate so the frontend
-  // can show the authoritative values from the backend.
   return sendSuccess(res, 201, "Employee Registered Successfully", {
     employeeId,
-    createdDate,
   });
 });
 
