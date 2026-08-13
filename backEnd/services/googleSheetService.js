@@ -3,6 +3,21 @@ import appScriptClient from "../config/appscript.js";
 // Turns a raw axios error into one of our typed errors (APPSCRIPT_ERROR /
 // NETWORK_ERROR) so errorHandler.js can respond with the right status.
 // Shared by every function in this file that calls Apps Script.
+async function withRetry(fn, attempts = 3) {
+  let lastErr;
+  for (let i = 0; i < attempts; i++) {
+    try {
+      return await fn();
+    } catch (err) {
+      lastErr = err;
+      console.warn(
+        `Apps Script call failed (attempt ${i + 1}/${attempts}):`,
+        err.message,
+      );
+    }
+  }
+  throw lastErr;
+}
 function classifyAxiosError(err) {
   if (err.type === "APPSCRIPT_ERROR" || err.type === "NETWORK_ERROR") {
     return err; // already classified - pass through
@@ -36,7 +51,7 @@ function classifyAxiosError(err) {
 // controllers just call registerEmployee(payload) and get plain data back.
 async function registerEmployee(payload) {
   try {
-    const { data } = await appScriptClient.post("", payload);
+    const { data } = await withRetry(() => appScriptClient.post("", payload));
 
     // Apps Script is expected to reply with { success: true } or
     // { success: false, message } - if it says it failed, treat that
@@ -61,7 +76,7 @@ async function registerEmployee(payload) {
 // the Node server restarts.
 async function getLastEmployeeId() {
   try {
-    const { data } = await appScriptClient.get("");
+    const { data } = await withRetry(() => appScriptClient.get(""));
 
     if (!data || data.success !== true) {
       const appScriptError = new Error(
