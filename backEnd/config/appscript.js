@@ -6,7 +6,7 @@ import "dotenv/config";
 // the only thing allowed to do that.
 const appScriptClient = axios.create({
   baseURL: process.env.GOOGLE_SCRIPT_URL, // e.g. https://script.google.com/macros/s/xxxx/exec
-  timeout: 10000, // 10s - Apps Script web apps can be slow to cold-start
+  timeout: 25000, // 25s - Apps Script web apps can be slow to cold-start
   headers: {
     "Content-Type": "application/json",
   },
