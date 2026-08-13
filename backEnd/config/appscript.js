@@ -8,7 +8,7 @@ const appScriptClient = axios.create({
   baseURL: process.env.GOOGLE_SCRIPT_URL, // e.g. https://script.google.com/macros/s/xxxx/exec
   timeout: 25000, // 25s - Apps Script web apps can be slow to cold-start
   headers: {
-    "Content-Type": "application/json",
+    "Content-Type": "text/plain;charset=utf-8",
   },
 });
 
