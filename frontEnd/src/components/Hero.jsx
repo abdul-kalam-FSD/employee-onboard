@@ -1,12 +1,8 @@
-import { IconSparkle } from './Icons'
+import { IconSparkle } from "./Icons";
 
 export default function Hero() {
   return (
     <div className="hero">
-      <span className="hero-badge">
-        <IconSparkle />
-        Welcome to the Team!
-      </span>
       <h1>Let&apos;s get you set up.</h1>
       <p>
         Complete the registration form below to begin your employee onboarding
@@ -16,5 +12,5 @@ export default function Hero() {
         Please make sure all information is accurate before submitting.
       </p>
     </div>
-  )
+  );
 }
